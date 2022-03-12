@@ -1,0 +1,50 @@
+<template>
+    <template if:true={showButton}>
+        <lightning-card>
+            <lightning-button label={buttonName} slot="actions" onclick={createRecord}></lightning-button>
+        </lightning-card>
+    </template>
+
+    <template if:true={showForm}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- Modal/Popup Box LWC header here -->
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                            size="small"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{buttonName}</h2>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+
+                    <lightning-record-edit-form form-class="form" object-api-name={objectApiName} density="comfy"
+                        onsuccess={handleSuccess}>
+                        <template for:each={fieldList} for:item="fieldName">
+                            <div key={fieldName}>
+                                <lightning-input-field field-name={fieldName}></lightning-input-field>
+                            </div>
+                        </template>
+                        <div class="slds-var-m-top_medium">
+                            <lightning-button variant="brand" type="submit" label="Save">
+                            </lightning-button>
+                            <lightning-button style="margin-left: 15px;" variant="brand" type="cancel" label="Cancel" onclick={closeModal}>
+                            </lightning-button>
+                        </div>
+                    </lightning-record-edit-form>
+                </div>
+                <!-- Modal/Popup Box LWC footer starts here -->
+                <footer class="slds-modal__footer">
+                    
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+</template>
